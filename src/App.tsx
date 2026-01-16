@@ -65,7 +65,7 @@ function App() {
   };
 
   return (
-    <div className={`min-h-screen ${settings.theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <div className={`min-h-screen flex flex-col ${settings.theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
       {/* Header */}
       <header className={`border-b sticky top-0 z-40 shadow-sm ${
         settings.theme === 'dark' 
@@ -82,8 +82,7 @@ function App() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-2xl mx-auto px-4 py-6">
-        {activeTab === 'dashboard' && <DashboardTab />}
+      <main className="flex-1 max-w-2xl mx-auto w-full px-4 py-6 pb-24 overflow-y-auto">{activeTab === 'dashboard' && <DashboardTab />}
         {activeTab === 'expenses' && <ExpensesTab />}
         {activeTab === 'income' && <IncomeTab />}
         {activeTab === 'bills' && <BillsTab />}
