@@ -184,15 +184,15 @@ export const GoalsTab: React.FC = () => {
 
                 {/* Contribute Form */}
                 {showContributeForm === goal.id && (
-                  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-end sm:items-center justify-center z-50">
-                    <div className="bg-white w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl p-6 animate-slide-up">
-                      <h3 className="text-xl font-bold text-gray-800 mb-4">
+                  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-end sm:items-center justify-center z-[9999] animate-fade-in">
+                    <div className="bg-white dark:bg-gray-800 w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl p-6 animate-slide-up shadow-2xl flex flex-col">
+                      <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6 flex-shrink-0">
                         زیادکردنی پارە بۆ {goal.name}
                       </h3>
 
-                      <div className="space-y-4">
+                      <div className="flex-1 overflow-y-auto space-y-4 mb-4 pr-2">
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                             بڕ (دینار)
                           </label>
                           <input
@@ -205,28 +205,28 @@ export const GoalsTab: React.FC = () => {
                             step="1000"
                             max={remaining}
                           />
-                          <p className="text-xs text-gray-500 mt-1">
+                          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                             {formatCurrency(remaining)} دینار ماوە بۆ تەواوبوون
                           </p>
                         </div>
+                      </div>
 
-                        <div className="flex gap-3">
-                          <button
-                            onClick={() => handleContribute(goal.id)}
-                            className="btn btn-primary flex-1"
-                          >
-                            زیادکردن
-                          </button>
-                          <button
-                            onClick={() => {
-                              setShowContributeForm(null);
-                              setContributeAmount('');
-                            }}
-                            className="btn btn-secondary"
-                          >
-                            پاشگەزبوونەوە
-                          </button>
-                        </div>
+                      <div className="border-t dark:border-gray-700 pt-4 space-y-3 flex-shrink-0">
+                        <button
+                          onClick={() => handleContribute(goal.id)}
+                          className="btn btn-primary w-full"
+                        >
+                          زیادکردن
+                        </button>
+                        <button
+                          onClick={() => {
+                            setShowContributeForm(null);
+                            setContributeAmount('');
+                          }}
+                          className="btn btn-secondary w-full"
+                        >
+                          پاشگەزبوونەوە
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -239,13 +239,15 @@ export const GoalsTab: React.FC = () => {
 
       {/* Add Goal Form */}
       {showAddForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-end sm:items-center justify-center z-50">
-          <div className="bg-white w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl p-6 animate-slide-up max-h-[90vh] overflow-y-auto">
-            <h3 className="text-xl font-bold text-gray-800 mb-4">ئامانجێکی نوێ</h3>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-end sm:items-center justify-center z-[9999] animate-fade-in">
+          <div className="bg-white dark:bg-gray-800 w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl p-6 animate-slide-up max-h-[90vh] shadow-2xl flex flex-col">
+            <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6 flex-shrink-0">
+              ئامانجێکی نوێ
+            </h3>
 
-            <div className="space-y-4">
+            <div className="flex-1 overflow-y-auto space-y-4 mb-4 pr-2">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   ناوی ئامانج
                 </label>
                 <input
@@ -258,7 +260,7 @@ export const GoalsTab: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   بڕی ئامانج (دینار)
                 </label>
                 <input
@@ -285,7 +287,7 @@ export const GoalsTab: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   وەسف (دڵخواز)
                 </label>
                 <textarea
@@ -298,7 +300,7 @@ export const GoalsTab: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   ڕەنگ
                 </label>
                 <div className="flex gap-2 flex-wrap">
@@ -316,13 +318,13 @@ export const GoalsTab: React.FC = () => {
               </div>
 
               <div className="flex gap-3 pt-4">
-                <button onClick={handleAddGoal} className="btn btn-primary flex-1">
+                <button onClick={handleAddGoal} className="btn btn-primary w-full">
                   <Plus size={20} className="inline ml-2" />
                   زیادکردن
                 </button>
                 <button
                   onClick={() => setShowAddForm(false)}
-                  className="btn btn-secondary"
+                  className="btn btn-secondary w-full"
                 >
                   پاشگەزبوونەوە
                 </button>

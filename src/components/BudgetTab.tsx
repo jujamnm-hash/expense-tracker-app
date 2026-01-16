@@ -174,13 +174,15 @@ export const BudgetTab: React.FC = () => {
 
       {/* Add Budget Form */}
       {showAddForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-end sm:items-center justify-center z-50">
-          <div className="bg-white w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl p-6 animate-slide-up">
-            <h3 className="text-xl font-bold text-gray-800 mb-4">دانانی بودجە</h3>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-end sm:items-center justify-center z-[9999] animate-fade-in">
+          <div className="bg-white dark:bg-gray-800 w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl p-6 animate-slide-up shadow-2xl flex flex-col">
+            <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6 flex-shrink-0">
+              دانانی بودجە
+            </h3>
 
-            <div className="space-y-4">
+            <div className="flex-1 overflow-y-auto space-y-4 mb-4 pr-2">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   جۆری خەرجی
                 </label>
                 <select
@@ -197,7 +199,7 @@ export const BudgetTab: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   سنووری مانگانە (دینار)
                 </label>
                 <input
@@ -210,21 +212,21 @@ export const BudgetTab: React.FC = () => {
                   step="10000"
                 />
               </div>
+            </div>
 
-              <div className="flex gap-3 pt-4">
-                <button
-                  onClick={handleAddBudget}
-                  className="btn btn-primary flex-1"
-                >
-                  دانان
-                </button>
-                <button
-                  onClick={() => setShowAddForm(false)}
-                  className="btn btn-secondary"
-                >
-                  پاشگەزبوونەوە
-                </button>
-              </div>
+            <div className="border-t dark:border-gray-700 pt-4 space-y-3 flex-shrink-0">
+              <button
+                onClick={handleAddBudget}
+                className="btn btn-primary w-full"
+              >
+                دانان
+              </button>
+              <button
+                onClick={() => setShowAddForm(false)}
+                className="btn btn-secondary w-full"
+              >
+                پاشگەزبوونەوە
+              </button>
             </div>
           </div>
         </div>
