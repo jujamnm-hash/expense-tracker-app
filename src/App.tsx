@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Wallet, TrendingDown, BarChart2, Settings, Target, TrendingUp, LayoutDashboard, DollarSign, Receipt, Palette, Sparkles, Brain, Heart, FileDown, Bell, Search, ArrowUpDown, PieChart, Repeat } from 'lucide-react';
+import { Wallet, TrendingDown, LayoutDashboard, Menu } from 'lucide-react';
 import { DashboardTab } from './components/DashboardTab';
 import { ExpensesTab } from './components/ExpensesTab';
 import { IncomeTab } from './components/IncomeTab';
@@ -19,11 +19,13 @@ import { CompareTab } from './components/CompareTab';
 import { SettingsTab } from './components/SettingsTab';
 import { ChartsTab } from './components/ChartsTab';
 import { RecurringTab } from './components/RecurringTab';
+import { NavigationMenu } from './components/NavigationMenu';
 import { Tab } from './types';
 import { useStore } from './store';
 
 function App() {
   const [activeTab, setActiveTab] = useState<Tab>('dashboard');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const settings = useStore((state) => state.settings);
 
   useEffect(() => {
@@ -46,27 +48,21 @@ function App() {
     }
   }, [settings.theme, settings.language, settings.accentColor]);
 
-  const tabs = [
+  // 4 main tabs for bottom navigation
+  const mainTabs = [
     { id: 'dashboard' as Tab, label: 'داشبۆرد', icon: LayoutDashboard },
-    { id: 'expenses' as Tab, label: 'خەرجی', icon: Wallet },
-    { id: 'income' as Tab, label: 'داهات', icon: DollarSign },
-    { id: 'bills' as Tab, label: 'پسوڵە', icon: Receipt },
-    { id: 'debts' as Tab, label: 'قەرز', icon: TrendingDown },
-    { id: 'budget' as Tab, label: 'بودجە', icon: TrendingUp },
-    { id: 'goals' as Tab, label: 'ئامانج', icon: Target },
-    { id: 'categories' as Tab, label: 'کاتەگۆری', icon: Palette },
-    { id: 'templates' as Tab, label: 'تێمپلێت', icon: Sparkles },
-    { id: 'analytics' as Tab, label: 'شیکاری AI', icon: Brain },
-    { id: 'health' as Tab, label: 'تەندروستی', icon: Heart },
-    { id: 'export' as Tab, label: 'دەرهێنان', icon: FileDown },
-    { id: 'notifications' as Tab, label: 'ئاگاداری', icon: Bell },
-    { id: 'search' as Tab, label: 'گەڕان', icon: Search },
-    { id: 'compare' as Tab, label: 'بەراوردکردن', icon: ArrowUpDown },
-    { id: 'charts' as Tab, label: 'چارتەکان', icon: PieChart },
-    { id: 'recurring' as Tab, label: 'دووبارەبوو', icon: Repeat },
-    { id: 'reports' as Tab, label: 'راپۆرت', icon: BarChart2 },
-    { id: 'settings' as Tab, label: 'ڕێکخستن', icon: Settings },
+    { id: 'expenses' as Tab, label: 'خەرجی', icon: TrendingDown },
+    { id: 'income' as Tab, label: 'داهات', icon: Wallet },
+    { id: 'menu' as 'menu', label: 'زیاتر', icon: Menu },
   ];
+
+  const handleTabClick = (tabId: Tab | 'menu') => {
+    if (tabId === 'menu') {
+      setIsMenuOpen(true);
+    } else {
+      setActiveTab(tabId);
+    }
+  };
 
   return (
     <div className={`min-h-screen ${settings.theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
@@ -108,23 +104,32 @@ function App() {
         {activeTab === 'settings' && <SettingsTab />}
       </main>
 
-      {/* Bottom Navigation */}
-      <nav className={`fixed bottom-0 left-0 right-0 border-t z-50 shadow-lg overflow-x-auto ${
+      {/* Navigation Menu */}
+      <NavigationMenu
+        isOpen={isMenuOpen}
+        onClose={() => setIsMenuOpen(false)}
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+        theme={settings.theme}
+      />
+
+      {/* Bottom Navigation - 4 Main Tabs */}
+      <nav className={`fixed bottom-0 left-0 right-0 border-t z-50 shadow-lg ${
         settings.theme === 'dark'
           ? 'bg-gray-800 border-gray-700'
           : 'bg-white border-gray-200'
       }`}>
-        <div className="max-w-2xl mx-auto px-1">
-          <div className="flex justify-around min-w-max">
-            {tabs.map((tab) => {
+        <div className="max-w-2xl mx-auto">
+          <div className="flex justify-around">
+            {mainTabs.map((tab) => {
               const Icon = tab.icon;
-              const isActive = activeTab === tab.id;
+              const isActive = tab.id !== 'menu' && activeTab === tab.id;
               
               return (
                 <button
                   key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`flex-1 flex flex-col items-center gap-1 py-2 px-2 transition-all min-w-[70px] ${
+                  onClick={() => handleTabClick(tab.id)}
+                  className={`flex-1 flex flex-col items-center gap-1 py-3 px-2 transition-all relative ${
                     isActive
                       ? settings.theme === 'dark'
                         ? 'text-primary-400'
@@ -134,12 +139,12 @@ function App() {
                       : 'text-gray-500 hover:text-gray-700'
                   }`}
                 >
-                  <Icon size={20} strokeWidth={isActive ? 2.5 : 2} />
-                  <span className={`text-xs ${isActive ? 'font-semibold' : 'font-medium'}`}>
+                  <Icon size={24} strokeWidth={isActive ? 2.5 : 2} />
+                  <span className={`text-xs ${isActive ? 'font-bold' : 'font-medium'}`}>
                     {tab.label}
                   </span>
                   {isActive && (
-                    <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-12 h-1 rounded-b-full ${
+                    <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-16 h-1 rounded-b-full ${
                       settings.theme === 'dark' ? 'bg-primary-400' : 'bg-primary-600'
                     }`} />
                   )}
