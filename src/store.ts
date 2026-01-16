@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { Expense, Debt, NotificationSettings, Payment, Budget, Goal, AppSettings, Income, Bill } from './types';
+import { Expense, Debt, NotificationSettings, Payment, Budget, Goal, AppSettings, Income, Bill, CustomCategory, BudgetTemplate } from './types';
 
 interface AppState {
   expenses: Expense[];
@@ -9,6 +9,8 @@ interface AppState {
   debts: Debt[];
   budgets: Budget[];
   goals: Goal[];
+  customCategories: CustomCategory[];
+  budgetTemplates: BudgetTemplate[];
   notificationSettings: NotificationSettings;
   settings: AppSettings;
   
@@ -43,6 +45,15 @@ interface AppState {
   deleteGoal: (id: string) => void;
   addToGoal: (id: string, amount: number) => void;
   
+  // Custom Category actions
+  addCustomCategory: (category: Omit<CustomCategory, 'id' | 'createdAt'>) => void;
+  deleteCustomCategory: (id: string) => void;
+  
+  // Budget Template actions
+  addBudgetTemplate: (template: Omit<BudgetTemplate, 'id' | 'createdAt'>) => void;
+  deleteBudgetTemplate: (id: string) => void;
+  applyBudgetTemplate: (templateId: string) => void;
+  
   // Settings actions
   updateSettings: (settings: Partial<AppSettings>) => void;
   
@@ -60,6 +71,8 @@ export const useStore = create<AppState>()(
       debts: [],
       budgets: [],
       goals: [],
+      customCategories: [],
+      budgetTemplates: [],
       notificationSettings: {
         enabled: true,
         time: '20:00',
@@ -254,6 +267,59 @@ export const useStore = create<AppState>()(
             ...settings,
           },
         })),
+      
+      addCustomCategory: (category) =>
+        set((state) => ({
+          customCategories: [
+            ...state.customCategories,
+            {
+              ...category,
+              id: Date.now().toString() + '-category',
+              createdAt: new Date().toISOString(),
+            },
+          ],
+        })),
+      
+      deleteCustomCategory: (id) =>
+        set((state) => ({
+          customCategories: state.customCategories.filter((c) => c.id !== id),
+        })),
+      
+      addBudgetTemplate: (template) =>
+        set((state) => ({
+          budgetTemplates: [
+            ...state.budgetTemplates,
+            {
+              ...template,
+              id: Date.now().toString() + '-template',
+              createdAt: new Date().toISOString(),
+            },
+          ],
+        })),
+      
+      deleteBudgetTemplate: (id) =>
+        set((state) => ({
+          budgetTemplates: state.budgetTemplates.filter((t) => t.id !== id),
+        })),
+      
+      applyBudgetTemplate: (templateId) =>
+        set((state) => {
+          const template = state.budgetTemplates.find((t) => t.id === templateId);
+          if (!template) return state;
+          
+          const newBudgets: Budget[] = template.budgets.map((b, index) => ({
+            id: (Date.now() + index).toString() + '-budget',
+            category: b.category,
+            monthlyLimit: b.limit,
+            spent: 0,
+            month: new Date().toISOString().slice(0, 7),
+          }));
+          
+          return {
+            ...state,
+            budgets: [...state.budgets, ...newBudgets],
+          };
+        }),
       
       updateNotificationSettings: (settings) =>
         set((state) => ({

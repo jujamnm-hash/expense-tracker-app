@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Wallet, TrendingDown, BarChart2, Settings, Target, TrendingUp, LayoutDashboard, DollarSign, Receipt } from 'lucide-react';
+import { Wallet, TrendingDown, BarChart2, Settings, Target, TrendingUp, LayoutDashboard, DollarSign, Receipt, Palette } from 'lucide-react';
 import { DashboardTab } from './components/DashboardTab';
 import { ExpensesTab } from './components/ExpensesTab';
 import { IncomeTab } from './components/IncomeTab';
@@ -8,6 +8,7 @@ import { DebtsTab } from './components/DebtsTab';
 import { ReportsTab } from './components/ReportsTab';
 import { BudgetTab } from './components/BudgetTab';
 import { GoalsTab } from './components/GoalsTab';
+import { CategoriesTab } from './components/CategoriesTab';
 import { SettingsTab } from './components/SettingsTab';
 import { Tab } from './types';
 import { useStore } from './store';
@@ -40,6 +41,7 @@ function App() {
     { id: 'debts' as Tab, label: 'قەرز', icon: TrendingDown },
     { id: 'budget' as Tab, label: 'بودجە', icon: TrendingUp },
     { id: 'goals' as Tab, label: 'ئامانج', icon: Target },
+    { id: 'categories' as Tab, label: 'کاتەگۆری', icon: Palette },
     { id: 'reports' as Tab, label: 'راپۆرت', icon: BarChart2 },
     { id: 'settings' as Tab, label: 'ڕێکخستن', icon: Settings },
   ];
@@ -64,10 +66,13 @@ function App() {
       {/* Main Content */}
       <main className="max-w-2xl mx-auto px-4 py-6">
         {activeTab === 'dashboard' && <DashboardTab />}
-        {activeTab === 'expenses' && <ExpensesTab />}        {activeTab === 'income' && <IncomeTab />}
-        {activeTab === 'bills' && <BillsTab />}        {activeTab === 'debts' && <DebtsTab />}
+        {activeTab === 'expenses' && <ExpensesTab />}
+        {activeTab === 'income' && <IncomeTab />}
+        {activeTab === 'bills' && <BillsTab />}
+        {activeTab === 'debts' && <DebtsTab />}
         {activeTab === 'budget' && <BudgetTab />}
         {activeTab === 'goals' && <GoalsTab />}
+        {activeTab === 'categories' && <CategoriesTab />}
         {activeTab === 'reports' && <ReportsTab />}
         {activeTab === 'settings' && <SettingsTab />}
       </main>

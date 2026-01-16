@@ -45,6 +45,18 @@ export interface CustomCategory {
   createdAt: string;
 }
 
+export interface BudgetTemplate {
+  id: string;
+  name: string;
+  description: string;
+  type: 'student' | 'family' | 'employee' | 'business' | 'custom';
+  budgets: {
+    category: string;
+    limit: number;
+  }[];
+  createdAt: string;
+}
+
 export interface Debt {
   id: string;
   type: 'borrowed' | 'lent'; // قەرزگرتن یان قەرزدان
@@ -108,7 +120,7 @@ export interface AppSettings {
   billReminderDays: number;
 }
 
-export type Tab = 'dashboard' | 'expenses' | 'income' | 'bills' | 'debts' | 'reports' | 'budget' | 'goals' | 'settings';
+export type Tab = 'dashboard' | 'expenses' | 'income' | 'bills' | 'debts' | 'reports' | 'budget' | 'goals' | 'categories' | 'settings';
 
 export const INCOME_SOURCES = [
   'مووچە',
