@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Bell, BellOff, Clock, Download, Info, Moon, Sun, Globe, Lock, Unlock, Save, Upload, Key } from 'lucide-react';
+import { Bell, Clock, Download, Info, Moon, Sun, Globe, Lock, Unlock, Save, Upload, Key } from 'lucide-react';
 import { useStore } from '../store';
 import { requestNotificationPermission, checkAndSendNotification, getTodayExpenseTotal } from '../utils';
 

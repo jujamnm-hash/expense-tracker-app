@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, X, Repeat, Calendar } from 'lucide-react';
+import { Plus, X, Repeat } from 'lucide-react';
 import { useStore } from '../store';
 import { EXPENSE_CATEGORIES } from '../types';
 import { format, addDays, addWeeks, addMonths } from 'date-fns';
@@ -92,7 +92,7 @@ export const RecurringExpenseForm: React.FC<RecurringExpenseFormProps> = ({ onCl
             </label>
             <select
               value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              onChange={(e) => setCategory(e.target.value as any)}
               className="input"
             >
               {EXPENSE_CATEGORIES.map((cat) => (

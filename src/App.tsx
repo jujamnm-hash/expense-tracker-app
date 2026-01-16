@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Wallet, TrendingDown, BarChart2, Settings, Target, TrendingUp, LayoutDashboard } from 'lucide-react';
 import { DashboardTab } from './components/DashboardTab';
 import { ExpensesTab } from './components/ExpensesTab';

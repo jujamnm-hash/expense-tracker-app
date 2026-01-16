@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Plus, TrendingUp, Target, AlertCircle } from 'lucide-react';
+import { Plus, Target, AlertCircle } from 'lucide-react';
 import { useStore } from '../store';
 import { formatCurrency } from '../utils';
-import { format, startOfMonth, endOfMonth } from 'date-fns';
+import { format } from 'date-fns';
 import { EXPENSE_CATEGORIES } from '../types';
 
 export const BudgetTab: React.FC = () => {
@@ -185,7 +185,7 @@ export const BudgetTab: React.FC = () => {
                 </label>
                 <select
                   value={category}
-                  onChange={(e) => setCategory(e.target.value)}
+                  onChange={(e) => setCategory(e.target.value as any)}
                   className="input"
                 >
                   {EXPENSE_CATEGORIES.map((cat) => (

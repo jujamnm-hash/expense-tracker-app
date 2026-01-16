@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Trash2, Calendar, User, DollarSign, ChevronDown, ChevronUp, Plus } from 'lucide-react';
+import { Trash2, Calendar, User, ChevronDown, ChevronUp, Plus } from 'lucide-react';
 import { Debt } from '../types';
 import { formatCurrency } from '../utils';
 import { format } from 'date-fns';

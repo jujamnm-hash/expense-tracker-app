@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { TrendingUp, TrendingDown, AlertCircle, Target, Award, Zap, Calendar, DollarSign } from 'lucide-react';
+import { TrendingUp, TrendingDown, AlertCircle, Target, Award, Zap, Calendar } from 'lucide-react';
 import { useStore } from '../store';
 import { formatCurrency } from '../utils';
 import { format, startOfMonth, endOfMonth, subMonths, differenceInDays } from 'date-fns';

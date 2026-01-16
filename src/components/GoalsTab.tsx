@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Target, TrendingUp, Calendar, X } from 'lucide-react';
+import { Plus, Target, Calendar, X } from 'lucide-react';
 import { useStore } from '../store';
 import { formatCurrency } from '../utils';
 import { format } from 'date-fns';
@@ -10,7 +10,7 @@ const GOAL_COLORS = [
 ];
 
 export const GoalsTab: React.FC = () => {
-  const { goals, addGoal, updateGoal, deleteGoal, addToGoal } = useStore();
+  const { goals, addGoal, deleteGoal, addToGoal } = useStore();
   const [showAddForm, setShowAddForm] = useState(false);
   const [showContributeForm, setShowContributeForm] = useState<string | null>(null);
   const [name, setName] = useState('');
@@ -57,7 +57,6 @@ export const GoalsTab: React.FC = () => {
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   });
 
-  const totalGoalsAmount = goals.reduce((sum, g) => sum + g.targetAmount, 0);
   const totalSaved = goals.reduce((sum, g) => sum + g.currentAmount, 0);
   const completedGoals = goals.filter(g => g.currentAmount >= g.targetAmount).length;
 

@@ -75,7 +75,7 @@ export const AddExpenseForm: React.FC<{ onClose: () => void }> = ({ onClose }) =
             </label>
             <select
               value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              onChange={(e) => setCategory(e.target.value as any)}
               className="input"
             >
               {EXPENSE_CATEGORIES.map((cat) => (
