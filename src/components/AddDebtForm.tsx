@@ -34,21 +34,22 @@ export const AddDebtForm: React.FC<AddDebtFormProps> = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-end sm:items-center justify-center z-50 animate-fade-in">
-      <div className="bg-white w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl p-6 animate-slide-up max-h-[90vh] overflow-y-auto">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-bold text-gray-800">زیادکردنی قەرز</h2>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-end sm:items-center justify-center z-[9999] animate-fade-in">
+      <div className="bg-white dark:bg-gray-800 w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl p-6 animate-slide-up max-h-[90vh] shadow-2xl flex flex-col">
+        <div className="flex justify-between items-center mb-6 flex-shrink-0">
+          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">زیادکردنی قەرز</h2>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-full"
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full"
           >
-            <X size={24} />
+            <X size={24} className="text-gray-600 dark:text-gray-400" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0">
+          <div className="flex-1 overflow-y-auto space-y-4 mb-4 pr-2">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               جۆری قەرز
             </label>
             <div className="grid grid-cols-2 gap-3">
@@ -57,8 +58,8 @@ export const AddDebtForm: React.FC<AddDebtFormProps> = ({ onClose }) => {
                 onClick={() => setType('borrowed')}
                 className={`p-3 rounded-lg border-2 font-medium transition-all ${
                   type === 'borrowed'
-                    ? 'border-red-500 bg-red-50 text-red-700'
-                    : 'border-gray-200 text-gray-600'
+                    ? 'border-red-500 bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-400'
+                    : 'border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400'
                 }`}
               >
                 قەرزگرتن
@@ -68,8 +69,8 @@ export const AddDebtForm: React.FC<AddDebtFormProps> = ({ onClose }) => {
                 onClick={() => setType('lent')}
                 className={`p-3 rounded-lg border-2 font-medium transition-all ${
                   type === 'lent'
-                    ? 'border-green-500 bg-green-50 text-green-700'
-                    : 'border-gray-200 text-gray-600'
+                    ? 'border-green-500 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400'
+                    : 'border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400'
                 }`}
               >
                 قەرزدان
@@ -78,7 +79,7 @@ export const AddDebtForm: React.FC<AddDebtFormProps> = ({ onClose }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               ناوی کەس
             </label>
             <input
@@ -92,7 +93,7 @@ export const AddDebtForm: React.FC<AddDebtFormProps> = ({ onClose }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               بڕ (دینار)
             </label>
             <input
@@ -108,7 +109,7 @@ export const AddDebtForm: React.FC<AddDebtFormProps> = ({ onClose }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               بەرواری قەرز
             </label>
             <input
@@ -121,7 +122,7 @@ export const AddDebtForm: React.FC<AddDebtFormProps> = ({ onClose }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               بەرواری گەڕانەوە (دڵخواز)
             </label>
             <input
@@ -133,7 +134,7 @@ export const AddDebtForm: React.FC<AddDebtFormProps> = ({ onClose }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               تێبینی (دڵخواز)
             </label>
             <textarea
@@ -145,15 +146,17 @@ export const AddDebtForm: React.FC<AddDebtFormProps> = ({ onClose }) => {
             />
           </div>
 
-          <div className="flex gap-3 pt-4">
-            <button type="submit" className="btn btn-primary flex-1">
+          </div>
+
+          <div className="border-t dark:border-gray-700 pt-4 space-y-3 flex-shrink-0">
+            <button type="submit" className="btn btn-primary w-full">
               <Plus size={20} className="inline ml-2" />
               زیادکردن
             </button>
             <button
               type="button"
               onClick={onClose}
-              className="btn btn-secondary"
+              className="btn btn-secondary w-full"
             >
               پاشگەزبوونەوە
             </button>

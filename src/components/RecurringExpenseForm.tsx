@@ -64,9 +64,9 @@ export const RecurringExpenseForm: React.FC<RecurringExpenseFormProps> = ({ onCl
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-end sm:items-center justify-center z-50 animate-fade-in">
-      <div className="bg-white dark:bg-gray-800 w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl p-6 animate-slide-up max-h-[90vh] overflow-y-auto">
-        <div className="flex justify-between items-center mb-6">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-end sm:items-center justify-center z-[9999] animate-fade-in">
+      <div className="bg-white dark:bg-gray-800 w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl p-6 animate-slide-up max-h-[90vh] shadow-2xl flex flex-col">
+        <div className="flex justify-between items-center mb-6 flex-shrink-0">
           <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 flex items-center gap-2">
             <Repeat size={24} className="text-primary-500" />
             خەرجیی دووبارە
@@ -79,7 +79,8 @@ export const RecurringExpenseForm: React.FC<RecurringExpenseFormProps> = ({ onCl
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0">
+          <div className="flex-1 overflow-y-auto space-y-4 mb-4 pr-2">
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               بڕ (دینار)
@@ -204,15 +205,17 @@ export const RecurringExpenseForm: React.FC<RecurringExpenseFormProps> = ({ onCl
             </p>
           </div>
 
-          <div className="flex gap-3 pt-4">
-            <button type="submit" className="btn btn-primary flex-1">
+          </div>
+
+          <div className="border-t dark:border-gray-700 pt-4 space-y-3 flex-shrink-0">
+            <button type="submit" className="btn btn-primary w-full">
               <Plus size={20} className="inline ml-2" />
               دروستکردن
             </button>
             <button
               type="button"
               onClick={onClose}
-              className="btn btn-secondary"
+              className="btn btn-secondary w-full"
             >
               پاشگەزبوونەوە
             </button>
