@@ -50,22 +50,22 @@ export const AddExpenseForm: React.FC<{ onClose: () => void }> = ({ onClose }) =
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 animate-fade-in overflow-y-auto">
-      <div className="flex min-h-full items-end sm:items-center justify-center p-4">
-        <div className="bg-white dark:bg-gray-800 w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl p-6 animate-slide-up max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-[9999] animate-fade-in overflow-y-auto flex items-end sm:items-center justify-center pb-24 sm:pb-0">
+      <div className="bg-white dark:bg-gray-800 w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl p-6 animate-slide-up max-h-[85vh] overflow-y-auto shadow-2xl flex flex-col">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-bold text-gray-800">زیادکردنی خەرجی</h2>
+          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">زیادکردنی خەرجی</h2>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-full"
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors"
           >
-            <X size={24} />
+            <X size={24} className="text-gray-600 dark:text-gray-400" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 flex-1 flex flex-col">
+          <div className="flex-1 overflow-y-auto space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               بڕ (دینار)
             </label>
             <input
@@ -77,11 +77,12 @@ export const AddExpenseForm: React.FC<{ onClose: () => void }> = ({ onClose }) =
               required
               min="0"
               step="500"
+              autoFocus
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               جۆری خەرجی
             </label>
             <select
@@ -98,7 +99,7 @@ export const AddExpenseForm: React.FC<{ onClose: () => void }> = ({ onClose }) =
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               بەروار
             </label>
             <input
@@ -111,7 +112,7 @@ export const AddExpenseForm: React.FC<{ onClose: () => void }> = ({ onClose }) =
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               وەسف (دڵخواز)
             </label>
             <textarea
@@ -124,7 +125,7 @@ export const AddExpenseForm: React.FC<{ onClose: () => void }> = ({ onClose }) =
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               تاگەکان (دڵخواز)
             </label>
             <div className="flex gap-2 mb-2">
@@ -149,13 +150,13 @@ export const AddExpenseForm: React.FC<{ onClose: () => void }> = ({ onClose }) =
                 {tags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm flex items-center gap-1"
+                    className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm flex items-center gap-1"
                   >
                     {tag}
                     <button
                       type="button"
                       onClick={() => removeTag(tag)}
-                      className="hover:text-primary-900"
+                      className="hover:text-blue-900 dark:hover:text-blue-100"
                     >
                       ×
                     </button>
@@ -165,18 +166,19 @@ export const AddExpenseForm: React.FC<{ onClose: () => void }> = ({ onClose }) =
             )}
           </div>
 
-          <div className="flex gap-3 pt-4">
-            <button type="submit" className="btn btn-primary flex-1">
+          <div className="border-t dark:border-gray-700 pt-4 space-y-3 mt-auto flex-shrink-0">
+            <button type="submit" className="btn btn-primary w-full">
               <Plus size={20} className="inline ml-2" />
               زیادکردن
             </button>
             <button
               type="button"
               onClick={onClose}
-              className="btn btn-secondary"
+              className="btn btn-secondary w-full"
             >
               پاشگەزبوونەوە
             </button>
+          </div>
           </div>
         </form>
         </div>
