@@ -10,14 +10,20 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><defs><linearGradient id='grad'><stop offset='0%' stop-color='%2310b981'/><stop offset='100%' stop-color='%23059669'/></linearGradient></defs><rect width='192' height='192' rx='45' fill='url(%23grad)'/><g transform='translate(48,48)'><rect x='8' y='24' width='88' height='64' rx='6' fill='white'/><path d='M 8 24 Q 8 16 16 16 L 80 16 Q 88 16 88 24' fill='white'/><rect x='16' y='56' width='56' height='24' rx='3' fill='white' opacity='0.6'/><circle cx='76' cy='64' r='12' fill='white'/></g></svg>",
+      "src": "/expense-tracker-app/icon-192x192.png",
       "sizes": "192x192",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><linearGradient id='grad'><stop offset='0%' stop-color='%2310b981'/><stop offset='100%' stop-color='%23059669'/></linearGradient></defs><rect width='512' height='512' rx='120' fill='url(%23grad)'/><g transform='translate(120,120)'><rect x='20' y='60' width='230' height='170' rx='16' fill='white'/><path d='M 20 60 Q 20 40 40 40 L 210 40 Q 230 40 230 60' fill='white'/><rect x='40' y='140' width='150' height='70' rx='8' fill='white' opacity='0.6'/><circle cx='200' cy='175' r='35' fill='white'/></g></svg>",
+      "src": "/expense-tracker-app/icon-512x512.png",
       "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/expense-tracker-app/icon.svg",
+      "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
     }
@@ -30,9 +36,9 @@
       "url": "/expense-tracker-app/?action=add-expense",
       "icons": [
         {
-          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><defs><linearGradient id='grad'><stop offset='0%' stop-color='%2310b981'/><stop offset='100%' stop-color='%23059669'/></linearGradient></defs><rect width='192' height='192' rx='45' fill='url(%23grad)'/><g transform='translate(48,48)'><rect x='8' y='24' width='88' height='64' rx='6' fill='white'/><path d='M 8 24 Q 8 16 16 16 L 80 16 Q 88 16 88 24' fill='white'/><rect x='16' y='56' width='56' height='24' rx='3' fill='white' opacity='0.6'/><circle cx='76' cy='64' r='12' fill='white'/></g></svg>",
+          "src": "/expense-tracker-app/icon-192x192.png",
           "sizes": "192x192",
-          "type": "image/svg+xml"
+          "type": "image/png"
         }
       ]
     },
@@ -43,9 +49,9 @@
       "url": "/expense-tracker-app/?action=view-expenses",
       "icons": [
         {
-          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><defs><linearGradient id='grad'><stop offset='0%' stop-color='%2310b981'/><stop offset='100%' stop-color='%23059669'/></linearGradient></defs><rect width='192' height='192' rx='45' fill='url(%23grad)'/><g transform='translate(48,48)'><rect x='8' y='24' width='88' height='64' rx='6' fill='white'/><path d='M 8 24 Q 8 16 16 16 L 80 16 Q 88 16 88 24' fill='white'/><rect x='16' y='56' width='56' height='24' rx='3' fill='white' opacity='0.6'/><circle cx='76' cy='64' r='12' fill='white'/></g></svg>",
+          "src": "/expense-tracker-app/icon-192x192.png",
           "sizes": "192x192",
-          "type": "image/svg+xml"
+          "type": "image/png"
         }
       ]
     }
@@ -53,15 +59,15 @@
   "categories": ["productivity", "finance"],
   "screenshots": [
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><defs><linearGradient id='grad'><stop offset='0%' stop-color='%2310b981'/><stop offset='100%' stop-color='%23059669'/></linearGradient></defs><rect width='192' height='192' rx='45' fill='url(%23grad)'/><g transform='translate(48,48)'><rect x='8' y='24' width='88' height='64' rx='6' fill='white'/><path d='M 8 24 Q 8 16 16 16 L 80 16 Q 88 16 88 24' fill='white'/><rect x='16' y='56' width='56' height='24' rx='3' fill='white' opacity='0.6'/><circle cx='76' cy='64' r='12' fill='white'/></g></svg>",
+      "src": "/expense-tracker-app/icon-192x192.png",
       "sizes": "192x192",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "form_factor": "narrow"
     },
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><linearGradient id='grad'><stop offset='0%' stop-color='%2310b981'/><stop offset='100%' stop-color='%23059669'/></linearGradient></defs><rect width='512' height='512' rx='120' fill='url(%23grad)'/><g transform='translate(120,120)'><rect x='20' y='60' width='230' height='170' rx='16' fill='white'/><path d='M 20 60 Q 20 40 40 40 L 210 40 Q 230 40 230 60' fill='white'/><rect x='40' y='140' width='150' height='70' rx='8' fill='white' opacity='0.6'/><circle cx='200' cy='175' r='35' fill='white'/></g></svg>",
+      "src": "/expense-tracker-app/icon-512x512.png",
       "sizes": "512x512",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "form_factor": "wide"
     }
   ]
