@@ -1,9 +1,11 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { Expense, Debt, NotificationSettings, Payment, Budget, Goal, AppSettings } from './types';
+import { Expense, Debt, NotificationSettings, Payment, Budget, Goal, AppSettings, Income, Bill } from './types';
 
 interface AppState {
   expenses: Expense[];
+  incomes: Income[];
+  bills: Bill[];
   debts: Debt[];
   budgets: Budget[];
   goals: Goal[];
@@ -14,6 +16,15 @@ interface AppState {
   addExpense: (expense: Omit<Expense, 'id' | 'createdAt'>) => void;
   updateExpense: (id: string, expense: Partial<Expense>) => void;
   deleteExpense: (id: string) => void;
+  
+  // Income actions
+  addIncome: (income: Omit<Income, 'id' | 'createdAt'>) => void;
+  deleteIncome: (id: string) => void;
+  
+  // Bill actions
+  addBill: (bill: Omit<Bill, 'id' | 'createdAt'>) => void;
+  deleteBill: (id: string) => void;
+  toggleBillPaid: (id: string) => void;
   
   // Debt actions
   addDebt: (debt: Omit<Debt, 'id' | 'createdAt' | 'payments' | 'remainingAmount'>) => void;
@@ -44,6 +55,8 @@ export const useStore = create<AppState>()(
   persist(
     (set) => ({
       expenses: [],
+      incomes: [],
+      bills: [],
       debts: [],
       budgets: [],
       goals: [],
@@ -56,6 +69,7 @@ export const useStore = create<AppState>()(
         language: 'ku',
         currency: 'IQD',
         isLocked: false,
+        billReminderDays: 3,
       },
       
       addExpense: (expense) =>
@@ -80,6 +94,47 @@ export const useStore = create<AppState>()(
       deleteExpense: (id) =>
         set((state) => ({
           expenses: state.expenses.filter((exp) => exp.id !== id),
+        })),
+      
+      addIncome: (income) =>
+        set((state) => ({
+          incomes: [
+            ...state.incomes,
+            {
+              ...income,
+              id: Date.now().toString() + '-income',
+              createdAt: new Date().toISOString(),
+            },
+          ],
+        })),
+      
+      deleteIncome: (id) =>
+        set((state) => ({
+          incomes: state.incomes.filter((inc) => inc.id !== id),
+        })),
+      
+      addBill: (bill) =>
+        set((state) => ({
+          bills: [
+            ...state.bills,
+            {
+              ...bill,
+              id: Date.now().toString() + '-bill',
+              createdAt: new Date().toISOString(),
+            },
+          ],
+        })),
+      
+      deleteBill: (id) =>
+        set((state) => ({
+          bills: state.bills.filter((bill) => bill.id !== id),
+        })),
+      
+      toggleBillPaid: (id) =>
+        set((state) => ({
+          bills: state.bills.map((bill) =>
+            bill.id === id ? { ...bill, isPaid: !bill.isPaid } : bill
+          ),
         })),
       
       addDebt: (debt) =>

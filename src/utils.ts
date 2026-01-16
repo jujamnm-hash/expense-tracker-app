@@ -1,11 +1,19 @@
 import { Expense, MonthlyReport } from './types';
 import { startOfMonth, endOfMonth, eachDayOfInterval, format } from 'date-fns';
 
-export const formatCurrency = (amount: number): string => {
-  return new Intl.NumberFormat('ar-IQ', {
+export const formatCurrency = (amount: number, currency: string = 'IQD'): string => {
+  const symbols: Record<string, string> = {
+    IQD: 'د.ع',
+    USD: '$',
+    EUR: '€',
+  };
+  
+  const formatted = new Intl.NumberFormat('ar-IQ', {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   }).format(amount);
+  
+  return `${formatted} ${symbols[currency] || symbols.IQD}`;
 };
 
 export const getMonthlyReport = (

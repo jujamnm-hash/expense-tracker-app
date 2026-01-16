@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Wallet, TrendingDown, BarChart2, Settings, Target, TrendingUp, LayoutDashboard } from 'lucide-react';
+import { Wallet, TrendingDown, BarChart2, Settings, Target, TrendingUp, LayoutDashboard, DollarSign, Receipt } from 'lucide-react';
 import { DashboardTab } from './components/DashboardTab';
 import { ExpensesTab } from './components/ExpensesTab';
+import { IncomeTab } from './components/IncomeTab';
+import { BillsTab } from './components/BillsTab';
 import { DebtsTab } from './components/DebtsTab';
 import { ReportsTab } from './components/ReportsTab';
 import { BudgetTab } from './components/BudgetTab';
@@ -33,6 +35,8 @@ function App() {
   const tabs = [
     { id: 'dashboard' as Tab, label: 'داشبۆرد', icon: LayoutDashboard },
     { id: 'expenses' as Tab, label: 'خەرجی', icon: Wallet },
+    { id: 'income' as Tab, label: 'داهات', icon: DollarSign },
+    { id: 'bills' as Tab, label: 'پسوڵە', icon: Receipt },
     { id: 'debts' as Tab, label: 'قەرز', icon: TrendingDown },
     { id: 'budget' as Tab, label: 'بودجە', icon: TrendingUp },
     { id: 'goals' as Tab, label: 'ئامانج', icon: Target },
@@ -60,8 +64,8 @@ function App() {
       {/* Main Content */}
       <main className="max-w-2xl mx-auto px-4 py-6">
         {activeTab === 'dashboard' && <DashboardTab />}
-        {activeTab === 'expenses' && <ExpensesTab />}
-        {activeTab === 'debts' && <DebtsTab />}
+        {activeTab === 'expenses' && <ExpensesTab />}        {activeTab === 'income' && <IncomeTab />}
+        {activeTab === 'bills' && <BillsTab />}        {activeTab === 'debts' && <DebtsTab />}
         {activeTab === 'budget' && <BudgetTab />}
         {activeTab === 'goals' && <GoalsTab />}
         {activeTab === 'reports' && <ReportsTab />}

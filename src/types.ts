@@ -11,6 +11,40 @@ export interface Expense {
   tags?: string[];
 }
 
+export interface Income {
+  id: string;
+  amount: number;
+  source: string; // سەرچاوە: مووچە، فرۆشتن، کرێ، هتد
+  description: string;
+  date: string;
+  createdAt: string;
+  isRecurring?: boolean;
+  recurringFrequency?: 'daily' | 'weekly' | 'monthly';
+  category: 'salary' | 'business' | 'investment' | 'rental' | 'gift' | 'other';
+}
+
+export interface Bill {
+  id: string;
+  name: string;
+  amount: number;
+  category: string;
+  dueDate: string;
+  isPaid: boolean;
+  isRecurring: boolean;
+  frequency?: 'monthly' | 'yearly';
+  reminderDays: number; // چەند رۆژ پێش بەروار یادەوەری بکات
+  createdAt: string;
+}
+
+export interface CustomCategory {
+  id: string;
+  name: string;
+  icon: string;
+  color: string;
+  type: 'expense' | 'income';
+  createdAt: string;
+}
+
 export interface Debt {
   id: string;
   type: 'borrowed' | 'lent'; // قەرزگرتن یان قەرزدان
@@ -71,9 +105,19 @@ export interface AppSettings {
   currency: 'IQD' | 'USD' | 'EUR';
   isLocked: boolean;
   password?: string;
+  billReminderDays: number;
 }
 
-export type Tab = 'dashboard' | 'expenses' | 'debts' | 'reports' | 'budget' | 'goals' | 'settings';
+export type Tab = 'dashboard' | 'expenses' | 'income' | 'bills' | 'debts' | 'reports' | 'budget' | 'goals' | 'settings';
+
+export const INCOME_SOURCES = [
+  'مووچە',
+  'بازرگانی',
+  'وەبەرهێنان',
+  'کرێ',
+  'دیاری',
+  'هیتر'
+] as const;
 
 export const EXPENSE_CATEGORIES = [
   'خواردن',
@@ -87,4 +131,5 @@ export const EXPENSE_CATEGORIES = [
   'هیتر'
 ] as const;
 
+export type IncomeSource = typeof INCOME_SOURCES[number];
 export type ExpenseCategory = typeof EXPENSE_CATEGORIES[number];
