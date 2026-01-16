@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Bell, Clock, Download, Info, Moon, Sun, Globe, Lock, Unlock, Save, Upload, Key } from 'lucide-react';
+import { Bell, Clock, Download, Info, Moon, Sun, Globe, Lock, Unlock, Save, Upload, Key, Palette } from 'lucide-react';
 import { useStore } from '../store';
 import { requestNotificationPermission, checkAndSendNotification, getTodayExpenseTotal } from '../utils';
 
@@ -204,6 +204,36 @@ export const SettingsTab: React.FC = () => {
           >
             {settings.theme === 'dark' ? 'تاریک' : 'ڕووناک'}
           </button>
+        </div>
+      </div>
+
+      {/* Accent Color Section */}
+      <div className="card">
+        <div className="flex items-center gap-2 mb-4">
+          <Palette size={20} className="text-gray-700" />
+          <h3 className="font-bold text-gray-800">ڕەنگی سەرەکی</h3>
+        </div>
+        <div className="grid grid-cols-5 gap-3">
+          {[
+            { code: 'blue', name: 'شین', color: 'bg-blue-500' },
+            { code: 'green', name: 'سەوز', color: 'bg-green-500' },
+            { code: 'purple', name: 'مۆر', color: 'bg-purple-500' },
+            { code: 'orange', name: 'پرتەقاڵی', color: 'bg-orange-500' },
+            { code: 'red', name: 'سور', color: 'bg-red-500' },
+          ].map((color) => (
+            <button
+              key={color.code}
+              onClick={() => updateSettings({ accentColor: color.code as any })}
+              className={`flex flex-col items-center gap-2 p-3 rounded-xl border-2 transition-all ${
+                settings.accentColor === color.code
+                  ? 'border-gray-800 dark:border-gray-200 shadow-lg scale-105'
+                  : 'border-gray-200 dark:border-gray-700'
+              }`}
+            >
+              <div className={`w-10 h-10 rounded-full ${color.color}`}></div>
+              <span className="text-xs font-medium">{color.name}</span>
+            </button>
+          ))}
         </div>
       </div>
 

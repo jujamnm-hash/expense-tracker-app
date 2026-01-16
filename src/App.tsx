@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Wallet, TrendingDown, BarChart2, Settings, Target, TrendingUp, LayoutDashboard, DollarSign, Receipt, Palette, Sparkles, Brain, Heart, FileDown, Bell, Search, ArrowUpDown } from 'lucide-react';
+import { Wallet, TrendingDown, BarChart2, Settings, Target, TrendingUp, LayoutDashboard, DollarSign, Receipt, Palette, Sparkles, Brain, Heart, FileDown, Bell, Search, ArrowUpDown, PieChart, Repeat } from 'lucide-react';
 import { DashboardTab } from './components/DashboardTab';
 import { ExpensesTab } from './components/ExpensesTab';
 import { IncomeTab } from './components/IncomeTab';
@@ -17,6 +17,8 @@ import { NotificationsTab } from './components/NotificationsTab';
 import { SearchTab } from './components/SearchTab';
 import { CompareTab } from './components/CompareTab';
 import { SettingsTab } from './components/SettingsTab';
+import { ChartsTab } from './components/ChartsTab';
+import { RecurringTab } from './components/RecurringTab';
 import { Tab } from './types';
 import { useStore } from './store';
 
@@ -32,13 +34,17 @@ function App() {
       document.documentElement.classList.remove('dark');
     }
     
+    // Apply accent color
+    document.documentElement.classList.remove('accent-blue', 'accent-green', 'accent-purple', 'accent-orange', 'accent-red');
+    document.documentElement.classList.add(`accent-${settings.accentColor}`);
+    
     // Apply RTL for Kurdish and Arabic
     if (settings.language === 'ku' || settings.language === 'ar') {
       document.documentElement.setAttribute('dir', 'rtl');
     } else {
       document.documentElement.setAttribute('dir', 'ltr');
     }
-  }, [settings.theme, settings.language]);
+  }, [settings.theme, settings.language, settings.accentColor]);
 
   const tabs = [
     { id: 'dashboard' as Tab, label: 'داشبۆرد', icon: LayoutDashboard },
@@ -56,6 +62,8 @@ function App() {
     { id: 'notifications' as Tab, label: 'ئاگاداری', icon: Bell },
     { id: 'search' as Tab, label: 'گەڕان', icon: Search },
     { id: 'compare' as Tab, label: 'بەراوردکردن', icon: ArrowUpDown },
+    { id: 'charts' as Tab, label: 'چارتەکان', icon: PieChart },
+    { id: 'recurring' as Tab, label: 'دووبارەبوو', icon: Repeat },
     { id: 'reports' as Tab, label: 'راپۆرت', icon: BarChart2 },
     { id: 'settings' as Tab, label: 'ڕێکخستن', icon: Settings },
   ];
@@ -94,6 +102,8 @@ function App() {
         {activeTab === 'notifications' && <NotificationsTab />}
         {activeTab === 'search' && <SearchTab />}
         {activeTab === 'compare' && <CompareTab />}
+        {activeTab === 'charts' && <ChartsTab />}
+        {activeTab === 'recurring' && <RecurringTab />}
         {activeTab === 'reports' && <ReportsTab />}
         {activeTab === 'settings' && <SettingsTab />}
       </main>

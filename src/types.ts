@@ -113,6 +113,7 @@ export interface Goal {
 
 export interface AppSettings {
   theme: 'light' | 'dark';
+  accentColor: 'blue' | 'green' | 'purple' | 'orange' | 'red';
   language: 'ku' | 'ar' | 'en';
   currency: 'IQD' | 'USD' | 'EUR';
   isLocked: boolean;
@@ -120,7 +121,7 @@ export interface AppSettings {
   billReminderDays: number;
 }
 
-export type Tab = 'dashboard' | 'expenses' | 'income' | 'bills' | 'debts' | 'reports' | 'budget' | 'goals' | 'categories' | 'templates' | 'analytics' | 'health' | 'export' | 'notifications' | 'search' | 'compare' | 'settings';
+export type Tab = 'dashboard' | 'expenses' | 'income' | 'bills' | 'debts' | 'reports' | 'budget' | 'goals' | 'categories' | 'templates' | 'analytics' | 'health' | 'export' | 'notifications' | 'search' | 'compare' | 'charts' | 'recurring' | 'settings';
 
 export const INCOME_SOURCES = [
   'مووچە',

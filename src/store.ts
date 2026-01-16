@@ -79,6 +79,7 @@ export const useStore = create<AppState>()(
       },
       settings: {
         theme: 'light',
+        accentColor: 'blue',
         language: 'ku',
         currency: 'IQD',
         isLocked: false,
