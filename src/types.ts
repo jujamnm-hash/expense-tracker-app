@@ -120,7 +120,7 @@ export interface AppSettings {
   billReminderDays: number;
 }
 
-export type Tab = 'dashboard' | 'expenses' | 'income' | 'bills' | 'debts' | 'reports' | 'budget' | 'goals' | 'categories' | 'templates' | 'analytics' | 'health' | 'export' | 'settings';
+export type Tab = 'dashboard' | 'expenses' | 'income' | 'bills' | 'debts' | 'reports' | 'budget' | 'goals' | 'categories' | 'templates' | 'analytics' | 'health' | 'export' | 'notifications' | 'search' | 'settings';
 
 export const INCOME_SOURCES = [
   'مووچە',
