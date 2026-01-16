@@ -40,8 +40,9 @@ export const AddExpenseForm: React.FC<{ onClose: () => void }> = ({ onClose }) =
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-end sm:items-center justify-center z-50 animate-fade-in">
-      <div className="bg-white w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl p-6 animate-slide-up">
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 animate-fade-in overflow-y-auto">
+      <div className="flex min-h-full items-end sm:items-center justify-center p-4">
+        <div className="bg-white dark:bg-gray-800 w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl p-6 animate-slide-up max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-bold text-gray-800">زیادکردنی خەرجی</h2>
           <button
@@ -168,6 +169,7 @@ export const AddExpenseForm: React.FC<{ onClose: () => void }> = ({ onClose }) =
             </button>
           </div>
         </form>
+        </div>
       </div>
     </div>
   );
