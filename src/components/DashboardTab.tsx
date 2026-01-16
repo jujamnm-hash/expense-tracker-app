@@ -1,11 +1,11 @@
 import React, { useMemo } from 'react';
-import { TrendingUp, TrendingDown, AlertCircle, Target, Award, Zap, Calendar } from 'lucide-react';
+import { TrendingUp, TrendingDown, AlertCircle, Target, Award, Zap, Calendar, DollarSign, CreditCard, PieChart, Activity, Sparkles, BarChart3, Wallet, Info } from 'lucide-react';
 import { useStore } from '../store';
 import { formatCurrency } from '../utils';
-import { format, startOfMonth, endOfMonth, subMonths, differenceInDays } from 'date-fns';
+import { format, startOfMonth, endOfMonth, subMonths, differenceInDays, parseISO } from 'date-fns';
 
 export const DashboardTab: React.FC = () => {
-  const { expenses, debts, budgets, goals } = useStore();
+  const { expenses, incomes, debts, budgets, goals, bills, settings } = useStore();
 
   const analytics = useMemo(() => {
     const now = new Date();
@@ -63,6 +63,27 @@ export const DashboardTab: React.FC = () => {
       ? activeGoals.reduce((sum, g) => sum + (g.currentAmount / g.targetAmount) * 100, 0) / activeGoals.length
       : 0;
     
+    // Income for current month
+    const monthStart = startOfMonth(now);
+    const monthEnd = endOfMonth(now);
+    const currentMonthIncome = incomes.filter(inc => {
+      const incDate = parseISO(inc.date);
+      return incDate >= monthStart && incDate <= monthEnd;
+    }).reduce((sum, inc) => sum + inc.amount, 0);
+
+    // Savings
+    const savings = currentMonthIncome - currentTotal;
+    const savingsRate = currentMonthIncome > 0 ? (savings / currentMonthIncome) * 100 : 0;
+
+    // Upcoming bills
+    const upcomingBills = bills.filter(b => !b.isPaid && b.isRecurring).length;
+
+    // Recent transactions count
+    const recentCount = expenses.filter(e => {
+      const days = differenceInDays(now, parseISO(e.date));
+      return days <= 7;
+    }).length;
+    
     return {
       currentTotal,
       lastTotal,
@@ -76,8 +97,14 @@ export const DashboardTab: React.FC = () => {
       totalDebtLent,
       activeGoals: activeGoals.length,
       avgGoalProgress,
+      currentMonthIncome,
+      savings,
+      savingsRate,
+      upcomingBills,
+      recentCount,
+      currentMonthExpenses,
     };
-  }, [expenses, debts, budgets, goals]);
+  }, [expenses, incomes, debts, budgets, goals, bills]);
 
   const insights = useMemo(() => {
     const tips = [];
@@ -145,30 +172,79 @@ export const DashboardTab: React.FC = () => {
 
   return (
     <div className="pb-20 space-y-6">
-      {/* Header */}
-      <div className="card bg-gradient-to-br from-purple-500 to-indigo-600 text-white">
-        <h1 className="text-2xl font-bold mb-2">داشبۆرد</h1>
-        <p className="text-sm opacity-90">پێشبینی و شیکاری زیرەکانە</p>
+      {/* Header with Quick Stats */}
+      <div className="card bg-gradient-to-br from-purple-600 via-pink-500 to-orange-500 text-white">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h1 className="text-2xl font-bold mb-1">داشبۆرد</h1>
+            <p className="text-sm opacity-90">پێشبینی و شیکاری زیرەکانە</p>
+          </div>
+          <Sparkles className="w-10 h-10 opacity-80" />
+        </div>
+        
+        <div className="grid grid-cols-2 gap-3 mt-4">
+          <div className="bg-white/20 backdrop-blur-sm rounded-xl p-3">
+            <p className="text-xs opacity-80 mb-1">خەرجی مانگ</p>
+            <p className="text-xl font-bold">{formatCurrency(analytics.currentTotal, settings.currency)}</p>
+          </div>
+          <div className="bg-white/20 backdrop-blur-sm rounded-xl p-3">
+            <p className="text-xs opacity-80 mb-1">پاشەکەوت</p>
+            <p className={`text-xl font-bold ${analytics.savings >= 0 ? 'text-white' : 'text-red-200'}`}>
+              {formatCurrency(analytics.savings, settings.currency)}
+            </p>
+          </div>
+        </div>
       </div>
 
-      {/* AI Insights */}
+      {/* Key Metrics Grid */}
+      <div className="grid grid-cols-2 gap-3">
+        <div className="card bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border-2 border-green-200 dark:border-green-800">
+          <DollarSign className="w-6 h-6 text-green-600 mb-2" />
+          <p className="text-xs text-gray-600 dark:text-gray-400">داهات</p>
+          <p className="text-xl font-bold text-green-600 mt-1">
+            {formatCurrency(analytics.currentMonthIncome, settings.currency)}
+          </p>
+        </div>
+
+        <div className="card bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 border-2 border-blue-200 dark:border-blue-800">
+          <Activity className="w-6 h-6 text-blue-600 mb-2" />
+          <p className="text-xs text-gray-600 dark:text-gray-400">ڕێژەی پاشەکەوت</p>
+          <p className="text-xl font-bold text-blue-600 mt-1">
+            {analytics.savingsRate.toFixed(1)}%
+          </p>
+        </div>
+
+        <div className="card bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 border-2 border-orange-200 dark:border-orange-800">
+          <CreditCard className="w-6 h-6 text-orange-600 mb-2" />
+          <p className="text-xs text-gray-600 dark:text-gray-400">پسوڵەی داهاتوو</p>
+          <p className="text-2xl font-bold text-orange-600 mt-1">
+            {analytics.upcomingBills}
+          </p>
+        </div>
+
+        <div className="card bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-2 border-purple-200 dark:border-purple-800">
+          <PieChart className="w-6 h-6 text-purple-600 mb-2" />
+          <p className="text-xs text-gray-600 dark:text-gray-400">مامەڵەی 7 ڕۆژ</p>
+          <p className="text-2xl font-bold text-purple-600 mt-1">
+            {analytics.recentCount}
+          </p>
+        </div>
+      </div>
+
+      {/* Smart Insights */}
       <div className="space-y-3">
-        <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100 flex items-center gap-2">
-          <Zap size={20} className="text-yellow-500" />
-          شیکاری زیرەکانە
-        </h2>
-        {insights.map((insight, index) => {
-          const Icon = insight.icon;
+        {insights.map((tip, index) => {
+          const Icon = tip.icon;
           return (
             <div
               key={index}
-              className={`card border-2 ${insight.color}`}
+              className={`card ${tip.color} border-l-4 ${tip.color.split(' ')[0].replace('text-', 'border-')}`}
             >
-              <div className="flex gap-3">
-                <Icon size={24} className="flex-shrink-0" />
-                <div>
-                  <h3 className="font-bold mb-1">{insight.title}</h3>
-                  <p className="text-sm opacity-90">{insight.message}</p>
+              <div className="flex items-start gap-3">
+                <Icon className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  <h3 className="font-bold text-sm mb-1">{tip.title}</h3>
+                  <p className="text-xs opacity-80">{tip.message}</p>
                 </div>
               </div>
             </div>
@@ -176,132 +252,115 @@ export const DashboardTab: React.FC = () => {
         })}
       </div>
 
-      {/* Quick Stats */}
-      <div className="grid grid-cols-2 gap-4">
-        <div className="card">
-          <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mb-2">
-            <Calendar size={18} />
-            <span className="text-sm">ناوەندی رۆژانە</span>
-          </div>
-          <div className="text-2xl font-bold text-gray-800 dark:text-gray-100">
-            {formatCurrency(analytics.avgDaily)}
-          </div>
-          <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">دینار</div>
-        </div>
-
-        <div className="card">
-          <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mb-2">
-            <TrendingUp size={18} />
-            <span className="text-sm">پێشبینی مانگ</span>
-          </div>
-          <div className="text-2xl font-bold text-gray-800 dark:text-gray-100">
-            {formatCurrency(analytics.projectedMonthly)}
-          </div>
-          <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">دینار</div>
-        </div>
-      </div>
-
-      {/* Trend Comparison */}
+      {/* Statistics Summary */}
       <div className="card">
-        <h3 className="font-bold text-gray-800 dark:text-gray-100 mb-3">
-          بەراوردی مانگەکان
-        </h3>
+        <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
+          <BarChart3 className="w-5 h-5" />
+          ئاماری گشتی
+        </h2>
         <div className="space-y-3">
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-600 dark:text-gray-400">مانگی ڕابردوو</span>
-            <span className="font-bold text-gray-800 dark:text-gray-100">
-              {formatCurrency(analytics.lastTotal)}
-            </span>
+          <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+            <div className="flex items-center gap-2">
+              <Wallet className="w-5 h-5 text-blue-600" />
+              <span className="text-sm">کۆی گشتی مانگ</span>
+            </div>
+            <span className="font-bold">{formatCurrency(analytics.currentTotal, settings.currency)}</span>
           </div>
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-600 dark:text-gray-400">مانگی ئێستا</span>
-            <span className="font-bold text-gray-800 dark:text-gray-100">
-              {formatCurrency(analytics.currentTotal)}
-            </span>
+
+          <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+            <div className="flex items-center gap-2">
+              <Calendar className="w-5 h-5 text-purple-600" />
+              <span className="text-sm">ڕۆژانە (ناوەند)</span>
+            </div>
+            <span className="font-bold">{formatCurrency(analytics.avgDaily, settings.currency)}</span>
           </div>
-          <div className="pt-2 border-t dark:border-gray-700">
-            <div className={`flex items-center gap-2 ${
-              analytics.trend > 0 ? 'text-red-600' : 'text-green-600'
-            }`}>
-              {analytics.trend > 0 ? <TrendingUp size={18} /> : <TrendingDown size={18} />}
-              <span className="font-bold">
-                {analytics.trend > 0 ? '+' : ''}{analytics.trend.toFixed(1)}%
-              </span>
-              <span className="text-sm">
-                {analytics.trend > 0 ? 'زیادبووە' : 'کەمبووەتەوە'}
+
+          <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+            <div className="flex items-center gap-2">
+              <TrendingUp className="w-5 h-5 text-orange-600" />
+              <span className="text-sm">پێشبینی کۆتایی مانگ</span>
+            </div>
+            <span className="font-bold">{formatCurrency(analytics.projectedMonthly, settings.currency)}</span>
+          </div>
+
+          {analytics.totalBudget > 0 && (
+            <>
+              <div className="h-px bg-gray-200 dark:bg-gray-700 my-2" />
+              <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <PieChart className="w-5 h-5 text-green-600" />
+                  <span className="text-sm">بودجە</span>
+                </div>
+                <div className="text-left">
+                  <div className="font-bold">{formatCurrency(analytics.totalBudget, settings.currency)}</div>
+                  <div className={`text-xs ${
+                    analytics.budgetUsage > 100 ? 'text-red-600' : analytics.budgetUsage > 80 ? 'text-orange-600' : 'text-green-600'
+                  }`}>
+                    {analytics.budgetUsage.toFixed(0)}% بەکارهێنراوە
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+
+          {analytics.totalDebtBorrowed > 0 && (
+            <>
+              <div className="h-px bg-gray-200 dark:bg-gray-700 my-2" />
+              <div className="flex justify-between items-center p-3 bg-red-50 dark:bg-red-900/20 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <AlertCircle className="w-5 h-5 text-red-600" />
+                  <span className="text-sm">قەرزی من</span>
+                </div>
+                <span className="font-bold text-red-600">
+                  {formatCurrency(analytics.totalDebtBorrowed, settings.currency)}
+                </span>
+              </div>
+            </>
+          )}
+
+          {analytics.totalDebtLent > 0 && (
+            <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+              <div className="flex items-center gap-2">
+                <Info className="w-5 h-5 text-blue-600" />
+                <span className="text-sm">قەرزی پێم</span>
+              </div>
+              <span className="font-bold text-blue-600">
+                {formatCurrency(analytics.totalDebtLent, settings.currency)}
               </span>
             </div>
-          </div>
+          )}
+
+          {analytics.activeGoals > 0 && (
+            <>
+              <div className="h-px bg-gray-200 dark:bg-gray-700 my-2" />
+              <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <Target className="w-5 h-5 text-purple-600" />
+                  <span className="text-sm">ئامانجە چالاکەکان</span>
+                </div>
+                <div className="text-left">
+                  <div className="font-bold">{analytics.activeGoals}</div>
+                  <div className="text-xs text-gray-600 dark:text-gray-400">
+                    ناوەند {analytics.avgGoalProgress.toFixed(0)}%
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
 
       {/* Top Category */}
       {analytics.topCategory && (
-        <div className="card">
-          <h3 className="font-bold text-gray-800 dark:text-gray-100 mb-3">
-            زۆرترین خەرجی
-          </h3>
-          <div className="flex justify-between items-center">
+        <div className="card bg-gradient-to-r from-indigo-500 to-purple-600 text-white">
+          <h3 className="text-sm font-medium opacity-90 mb-2">زۆرترین خەرجی</h3>
+          <div className="flex items-center justify-between">
             <div>
-              <div className="text-lg font-bold text-primary-600 dark:text-primary-400">
-                {analytics.topCategory[0]}
-              </div>
-              <div className="text-sm text-gray-600 dark:text-gray-400">
-                لەم مانگەدا
-              </div>
+              <div className="text-2xl font-bold mb-1">{analytics.topCategory[0]}</div>
+              <div className="text-sm opacity-90">{analytics.currentMonthExpenses.filter(e => e.category === analytics.topCategory[0]).length} مامەڵە</div>
             </div>
-            <div className="text-right">
-              <div className="text-2xl font-bold text-gray-800 dark:text-gray-100">
-                {formatCurrency(analytics.topCategory[1])}
-              </div>
-              <div className="text-xs text-gray-500 dark:text-gray-400">دینار</div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Debts Summary */}
-      {(analytics.totalDebtBorrowed > 0 || analytics.totalDebtLent > 0) && (
-        <div className="card">
-          <h3 className="font-bold text-gray-800 dark:text-gray-100 mb-3">
-            کورتەی قەرزەکان
-          </h3>
-          <div className="space-y-2">
-            {analytics.totalDebtBorrowed > 0 && (
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-red-600">قەرزگرتن</span>
-                <span className="font-bold text-red-600">
-                  {formatCurrency(analytics.totalDebtBorrowed)} دینار
-                </span>
-              </div>
-            )}
-            {analytics.totalDebtLent > 0 && (
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-green-600">قەرزدان</span>
-                <span className="font-bold text-green-600">
-                  {formatCurrency(analytics.totalDebtLent)} دینار
-                </span>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* Goals Progress */}
-      {analytics.activeGoals > 0 && (
-        <div className="card">
-          <h3 className="font-bold text-gray-800 dark:text-gray-100 mb-3">
-            پێشکەوتنی ئامانجەکان
-          </h3>
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-600 dark:text-gray-400">
-              {analytics.activeGoals} ئامانجی چالاک
-            </span>
-            <div className="text-right">
-              <div className="text-2xl font-bold text-purple-600">
-                {analytics.avgGoalProgress.toFixed(0)}%
-              </div>
-              <div className="text-xs text-gray-500 dark:text-gray-400">ناوەندی پێشکەوتن</div>
+            <div className="text-3xl font-bold">
+              {formatCurrency(analytics.topCategory[1], settings.currency)}
             </div>
           </div>
         </div>
@@ -309,3 +368,5 @@ export const DashboardTab: React.FC = () => {
     </div>
   );
 };
+
+export default DashboardTab;
