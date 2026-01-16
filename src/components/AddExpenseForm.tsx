@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Plus, X } from 'lucide-react';
 import { useStore } from '../store';
 import { EXPENSE_CATEGORIES } from '../types';
@@ -12,6 +12,16 @@ export const AddExpenseForm: React.FC<{ onClose: () => void }> = ({ onClose }) =
   const [date, setDate] = useState(format(new Date(), 'yyyy-MM-dd'));
   const [tags, setTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState('');
+
+  // Prevent background scrolling when modal is open
+  useEffect(() => {
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+    };
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

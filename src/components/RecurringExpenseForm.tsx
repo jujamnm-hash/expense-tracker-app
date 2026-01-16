@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Plus, X, Repeat } from 'lucide-react';
 import { useStore } from '../store';
 import { EXPENSE_CATEGORIES } from '../types';
@@ -17,6 +17,16 @@ export const RecurringExpenseForm: React.FC<RecurringExpenseFormProps> = ({ onCl
   const [startDate, setStartDate] = useState(format(new Date(), 'yyyy-MM-dd'));
   const [endDate, setEndDate] = useState('');
   const [occurrences, setOccurrences] = useState('12');
+
+  // Prevent background scrolling when modal is open
+  useEffect(() => {
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+    };
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
