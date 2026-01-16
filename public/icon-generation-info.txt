@@ -1,0 +1,17 @@
+# PWA Icon Generation Info
+
+Generated: 2026-01-16T14:53:28.191Z
+
+This file was auto-generated. To generate actual PNG icons from icon.svg, use one of these methods:
+
+## Option 1: ImageMagick (Recommended)
+```bash
+convert public/icon.svg -density 300 -resize 192x192 -background white -alpha remove public/icon-192x192.png
+convert public/icon.svg -density 300 -resize 512x512 -background white -alpha remove public/icon-512x512.png
+```
+
+## Option 2: Online Tool
+Visit: https://cloudconvert.com/svg-to-png
+
+## Option 3: PWA Builder
+Visit: https://www.pwabuilder.com/
