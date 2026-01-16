@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Wallet, TrendingDown, BarChart2, Settings, Target, TrendingUp, LayoutDashboard, DollarSign, Receipt, Palette, Sparkles, Brain, Heart } from 'lucide-react';
+import { Wallet, TrendingDown, BarChart2, Settings, Target, TrendingUp, LayoutDashboard, DollarSign, Receipt, Palette, Sparkles, Brain, Heart, FileDown } from 'lucide-react';
 import { DashboardTab } from './components/DashboardTab';
 import { ExpensesTab } from './components/ExpensesTab';
 import { IncomeTab } from './components/IncomeTab';
@@ -12,6 +12,7 @@ import { CategoriesTab } from './components/CategoriesTab';
 import { BudgetTemplatesTab } from './components/BudgetTemplatesTab';
 import { AdvancedAnalyticsTab } from './components/AdvancedAnalyticsTab';
 import { FinancialHealthTab } from './components/FinancialHealthTab';
+import { ExportTab } from './components/ExportTab';
 import { SettingsTab } from './components/SettingsTab';
 import { Tab } from './types';
 import { useStore } from './store';
@@ -48,6 +49,7 @@ function App() {
     { id: 'templates' as Tab, label: 'تێمپلێت', icon: Sparkles },
     { id: 'analytics' as Tab, label: 'شیکاری AI', icon: Brain },
     { id: 'health' as Tab, label: 'تەندروستی', icon: Heart },
+    { id: 'export' as Tab, label: 'دەرهێنان', icon: FileDown },
     { id: 'reports' as Tab, label: 'راپۆرت', icon: BarChart2 },
     { id: 'settings' as Tab, label: 'ڕێکخستن', icon: Settings },
   ];
@@ -82,6 +84,7 @@ function App() {
         {activeTab === 'templates' && <BudgetTemplatesTab />}
         {activeTab === 'analytics' && <AdvancedAnalyticsTab />}
         {activeTab === 'health' && <FinancialHealthTab />}
+        {activeTab === 'export' && <ExportTab />}
         {activeTab === 'reports' && <ReportsTab />}
         {activeTab === 'settings' && <SettingsTab />}
       </main>
