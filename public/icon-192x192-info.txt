@@ -1,0 +1,4 @@
+<!-- PWA Icon 192x192 -->
+<!-- Generated from SVG template for PWA support -->
+<!-- This is a placeholder. For production, replace with actual PNG generated from icon.svg -->
+<!-- You can generate this using: convert icon.svg -resize 192x192 icon-192x192.png -->
